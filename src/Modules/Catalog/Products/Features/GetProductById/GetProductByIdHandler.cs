@@ -15,7 +15,7 @@ internal class GetProductByIdHandler(CatalogDbContext dbContext) : IQueryHandler
 
         if (product is null)
         {
-            throw new NotFoundException($"Product with ID {query.Id} not found.");
+            throw new Exception($"Product with ID {query.Id} not found.");
         }
 
         return new GetProductByIdResult(product.Adapt<ProductDTO>());
