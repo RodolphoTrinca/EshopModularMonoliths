@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.AspNetCore.Mvc;
+
 namespace Catalog.Products.Features.GetProductById;
 
 //public record GetProductByIdRequest(Guid id);

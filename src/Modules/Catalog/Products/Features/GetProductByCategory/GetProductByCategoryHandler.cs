@@ -4,7 +4,7 @@ public record GetProductByCategoryQuery(string Category) : IQuery<GetProductByCa
 
 public record GetProductByCategoryResult(IEnumerable<ProductDTO> Products);
 
-internal class GetProductByCategoryHandler(CatalogDbContext dbContext) : IQueryHandler<GetProductByCategoryQuery, GetProductByCategoryResult>
+internal class GetProductByCategoryHandler(CatalogDbContext dbContext, ILogger<GetProductByCategoryHandler> logger) : IQueryHandler<GetProductByCategoryQuery, GetProductByCategoryResult>
 {
     public async Task<GetProductByCategoryResult> Handle(GetProductByCategoryQuery query, CancellationToken cancellationToken)
     {
@@ -13,6 +13,8 @@ internal class GetProductByCategoryHandler(CatalogDbContext dbContext) : IQueryH
             .Where(p => p.Category.Contains(query.Category))
             .OrderBy(p => p.Name)
             .ToListAsync(cancellationToken);
+
+        logger.LogDebug($"Found {products.Count} products in category {query.Category} converting products to DTOs");
 
         return new GetProductByCategoryResult(products.Adapt<List<ProductDTO>>());
     }

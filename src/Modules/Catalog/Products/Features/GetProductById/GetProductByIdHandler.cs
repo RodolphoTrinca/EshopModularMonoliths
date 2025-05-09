@@ -1,11 +1,13 @@
 ﻿
+using Catalog.Products.Features.GetProductByCategory;
+
 namespace Catalog.Products.Features.GetProductById;
 
 public record GetProductByIdQuery(Guid Id) : IQuery<GetProductByIdResult>;
 
 public record GetProductByIdResult(ProductDTO Product);
 
-internal class GetProductByIdHandler(CatalogDbContext dbContext) : IQueryHandler<GetProductByIdQuery, GetProductByIdResult>
+internal class GetProductByIdHandler(CatalogDbContext dbContext, ILogger<GetProductByIdHandler> logger) : IQueryHandler<GetProductByIdQuery, GetProductByIdResult>
 {
     public async Task<GetProductByIdResult> Handle(GetProductByIdQuery query, CancellationToken cancellationToken)
     {
@@ -15,8 +17,10 @@ internal class GetProductByIdHandler(CatalogDbContext dbContext) : IQueryHandler
 
         if (product is null)
         {
-            throw new Exception($"Product with ID {query.Id} not found.");
+            throw new ProductNotFoundException(query.Id);
         }
+
+        logger.LogDebug($"Found product with id {query.Id} converting product to DTO");
 
         return new GetProductByIdResult(product.Adapt<ProductDTO>());
     }
