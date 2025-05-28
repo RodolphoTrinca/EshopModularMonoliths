@@ -1,11 +1,11 @@
 ﻿namespace Basket.Basket.Features.AddItemIntoBasket;
 
-public record AddItemIntoBastketCommand(string UserName, ShoppingCartItemDTO ShoppingCartItem)
+public record AddItemIntoBasketCommand(string UserName, ShoppingCartItemDTO ShoppingCartItem)
     : ICommand<AddItemIntoBasketResult>;
 
 public record AddItemIntoBasketResult(Guid Id);
 
-public class AddItemIntoBasketCommandValidator : AbstractValidator<AddItemIntoBastketCommand>
+public class AddItemIntoBasketCommandValidator : AbstractValidator<AddItemIntoBasketCommand>
 {
     public AddItemIntoBasketCommandValidator()
     {
@@ -16,9 +16,9 @@ public class AddItemIntoBasketCommandValidator : AbstractValidator<AddItemIntoBa
 }
 
 internal class AddItemIntoBasketHandler(BasketDbContext dbContext) 
-    : ICommandHandler<AddItemIntoBastketCommand, AddItemIntoBasketResult>
+    : ICommandHandler<AddItemIntoBasketCommand, AddItemIntoBasketResult>
 {
-    public async Task<AddItemIntoBasketResult> Handle(AddItemIntoBastketCommand command, CancellationToken cancellationToken)
+    public async Task<AddItemIntoBasketResult> Handle(AddItemIntoBasketCommand command, CancellationToken cancellationToken)
     {
         var shoppingCart = await dbContext.ShoppingCarts
             .Include(x => x.Items)

@@ -2,9 +2,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
-namespace Shared.Extentions;
+namespace Shared.Extensions;
 
-public static class CarterExtentions
+public static class CarterExtensions
 {
     public static IServiceCollection AddCarterWithAssemblies(this IServiceCollection services, params Assembly[] assemblies)
     {

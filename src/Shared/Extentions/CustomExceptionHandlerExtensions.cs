@@ -1,10 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Shared.Exceptions.Handler;
 
-namespace Shared.Extentions;
+namespace Shared.Extensions;
 
-public static class CustomExceptionHandlerExtentions
+public static class CustomExceptionHandlerExtensions
 {
     public static IServiceCollection AddExceptionHandlers(this IServiceCollection services)
     {

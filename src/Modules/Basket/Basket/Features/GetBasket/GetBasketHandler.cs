@@ -1,21 +1,18 @@
-﻿using Basket.Basket.DTOs;
-using Basket.Basket.Exceptions;
-using Mapster;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 
 namespace Basket.Basket.Features.GetBasket;
 
 public record GetBasketQuery(string UserName)
-    : IQuery<GetBasketResponse>;
+    : IQuery<GetBasketResult>;
 
-public record GetBasketResponse(ShoppingCartDTO ShoppingCart);
+public record GetBasketResult(ShoppingCartDTO ShoppingCart);
 
 internal class GetBasketHandler(
     BasketDbContext dbContext,
     ILogger<GetBasketHandler> logger) 
-    : IQueryHandler<GetBasketQuery, GetBasketResponse>
+    : IQueryHandler<GetBasketQuery, GetBasketResult>
 {
-    public async Task<GetBasketResponse> Handle(GetBasketQuery query, CancellationToken cancellationToken)
+    public async Task<GetBasketResult> Handle(GetBasketQuery query, CancellationToken cancellationToken)
     {
         var basket = await dbContext.ShoppingCarts
             .AsNoTracking()
@@ -31,6 +28,6 @@ internal class GetBasketHandler(
 
         var basketDto = basket.Adapt<ShoppingCartDTO>();
 
-        return new GetBasketResponse(basketDto);
+        return new GetBasketResult(basketDto);
     }
 }
