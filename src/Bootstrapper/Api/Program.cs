@@ -22,11 +22,10 @@ var app = builder.Build();
 
 app.MapCarter();
 app.UseSerilogRequestLogging();
+app.UseExceptionHandler(options => {});
 
 app.UseCatalogModule();
 app.UseBasketModule();
 app.UseOrderingModule();
-
-app.UseExceptionHandler(options => {});
 
 app.Run();

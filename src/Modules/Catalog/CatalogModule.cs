@@ -10,14 +10,6 @@ public static class CatalogModule
 {
     public static IServiceCollection AddCatalogModule(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddMediatR(cfg => {
-            cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
-            cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
-            cfg.AddOpenBehavior(typeof(LoggingBehavior<,>));
-        });
-
-        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-
         var connectionString = configuration.GetConnectionString("Database");
 
         services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
