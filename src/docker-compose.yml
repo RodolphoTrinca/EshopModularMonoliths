@@ -4,6 +4,9 @@ services:
 
   seq:
     image: datalust/seq:latest
+
+  distributedcache:
+      image: redis:latest
     
 volumes:
   postgres_eshopdb:

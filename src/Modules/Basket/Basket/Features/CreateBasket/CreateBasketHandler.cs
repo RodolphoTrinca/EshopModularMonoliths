@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Basket.Data.Repository;
+using Microsoft.Extensions.Logging;
 
 namespace Basket.Basket.Features.CreateBasket;
 
@@ -15,7 +16,7 @@ public class CreateBasketCommandValidator : AbstractValidator<CreateBasketComman
 }
 
 internal class CreateBasketHandler(
-    BasketDbContext dbContext, 
+    IBasketRepository repository, 
     ILogger<CreateBasketHandler> logger) 
     : ICommandHandler<CreateBasketCommand, CreateBasketResult>
 {
@@ -25,8 +26,7 @@ internal class CreateBasketHandler(
         logger.LogDebug("Basket created");
 
         logger.LogDebug($"Saving changes: {shoppingCart}");
-        dbContext.ShoppingCarts.Add(shoppingCart);
-        await dbContext.SaveChangesAsync(cancellationToken);
+        await repository.CreateBasket(shoppingCart, cancellationToken);
 
         return new CreateBasketResult(shoppingCart.Id);
     }

@@ -1,4 +1,6 @@
-﻿namespace Basket.Basket.Features.RemoveItemFromBasket;
+﻿using Basket.Data.Repository;
+
+namespace Basket.Basket.Features.RemoveItemFromBasket;
 
 public record RemoveItemFromBasketCommand(string UserName, Guid ProductId)
     : ICommand<RemoveItemFromBasketResult>;
@@ -14,22 +16,17 @@ public class RemoveItemFromBasketCommandValidator : AbstractValidator<RemoveItem
     }
 }
 
-internal class RemoveItemFromBasketHandler(BasketDbContext dbContext)
+internal class RemoveItemFromBasketHandler(IBasketRepository repository)
     : ICommandHandler<RemoveItemFromBasketCommand, RemoveItemFromBasketResult>
 {
     public async Task<RemoveItemFromBasketResult> Handle(RemoveItemFromBasketCommand command, CancellationToken cancellationToken)
     {
-        var basket = await dbContext.ShoppingCarts
-            .Include(b => b.Items)
-            .SingleOrDefaultAsync(b => b.UserName == command.UserName, cancellationToken);
+        var shoppingCart = await repository.GetBasket(command.UserName, false, cancellationToken);
 
-        if (basket == null)
-        {
-            throw new BaskedNotFoundException(command.UserName);
-        }
+        shoppingCart.RemoveItem(command.ProductId);
 
-        basket.RemoveItem(command.ProductId);
-        await dbContext.SaveChangesAsync(cancellationToken);
-        return new RemoveItemFromBasketResult(basket.Id);
+        await repository.SaveChangesAsync(command.UserName, cancellationToken);
+
+        return new RemoveItemFromBasketResult(shoppingCart.Id);
     }
 }
