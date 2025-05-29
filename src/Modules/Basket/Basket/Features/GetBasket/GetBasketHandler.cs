@@ -15,7 +15,7 @@ internal class GetBasketHandler(
 {
     public async Task<GetBasketResult> Handle(GetBasketQuery query, CancellationToken cancellationToken)
     {
-        var basket = await repository.GetBasket(query.UserName, true, cancellationToken);
+        var basket = await repository.GetBasketAsync(query.UserName, true, cancellationToken);
 
         logger.LogDebug("Basket found!");
 

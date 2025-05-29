@@ -1,4 +1,4 @@
-﻿using Basket.Data.Repository;
+﻿using Catalog.Contracts.Products.Features.GetProductById;
 
 namespace Basket.Basket.Features.AddItemIntoBasket;
 
@@ -22,10 +22,10 @@ internal class AddItemIntoBasketHandler(IBasketRepository repository, ISender se
 {
     public async Task<AddItemIntoBasketResult> Handle(AddItemIntoBasketCommand command, CancellationToken cancellationToken)
     {
-        var shoppingCart = await repository.GetBasket(command.UserName, false, cancellationToken);
+        var shoppingCart = await repository.GetBasketAsync(command.UserName, false, cancellationToken);
 
-        //var result = await sender.Send(
-        //    new GetProductByIdQuery(command.ShoppingCartItem.ProductId));
+        var result = await sender.Send(
+            new GetProductByIdQuery(command.ShoppingCartItem.ProductId));
 
         shoppingCart.AddItem(
             command.ShoppingCartItem.ProductId,

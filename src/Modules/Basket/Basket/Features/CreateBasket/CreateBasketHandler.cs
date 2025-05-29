@@ -26,7 +26,7 @@ internal class CreateBasketHandler(
         logger.LogDebug("Basket created");
 
         logger.LogDebug($"Saving changes: {shoppingCart}");
-        await repository.CreateBasket(shoppingCart, cancellationToken);
+        await repository.CreateBasketAsync(shoppingCart, cancellationToken);
 
         return new CreateBasketResult(shoppingCart.Id);
     }

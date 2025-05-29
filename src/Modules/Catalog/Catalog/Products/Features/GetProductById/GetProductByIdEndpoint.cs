@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Mvc;
+﻿using Catalog.Contracts.Products.Features.GetProductById;
 
 namespace Catalog.Products.Features.GetProductById;
 

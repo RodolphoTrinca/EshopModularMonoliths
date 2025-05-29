@@ -21,7 +21,7 @@ internal class RemoveItemFromBasketHandler(IBasketRepository repository)
 {
     public async Task<RemoveItemFromBasketResult> Handle(RemoveItemFromBasketCommand command, CancellationToken cancellationToken)
     {
-        var shoppingCart = await repository.GetBasket(command.UserName, false, cancellationToken);
+        var shoppingCart = await repository.GetBasketAsync(command.UserName, false, cancellationToken);
 
         shoppingCart.RemoveItem(command.ProductId);
 
