@@ -5,7 +5,7 @@ using Shared.DDD;
 
 namespace Shared.Data.Interceptors;
 
-public class DispachDomainEventsInterceptor(IMediator mediator)
+public class DispatchDomainEventsInterceptor(IMediator mediator)
     : SaveChangesInterceptor
 {
     public override int SavedChanges(SaveChangesCompletedEventData eventData, int result)

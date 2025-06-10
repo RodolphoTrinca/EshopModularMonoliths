@@ -13,7 +13,7 @@ public static class CatalogModule
         var connectionString = configuration.GetConnectionString("Database");
 
         services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
-        services.AddScoped<ISaveChangesInterceptor, DispachDomainEventsInterceptor>();
+        services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();
 
         services.AddDbContext<CatalogDbContext>((sp, options) =>
         {

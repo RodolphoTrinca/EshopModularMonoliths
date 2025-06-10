@@ -18,7 +18,7 @@ public static class BasketModule
         var connectionString = configuration.GetConnectionString("Database");
 
         services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
-        services.AddScoped<ISaveChangesInterceptor, DispachDomainEventsInterceptor>();
+        services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();
 
         services.AddDbContext<BasketDbContext>((sp, options) =>
         {
