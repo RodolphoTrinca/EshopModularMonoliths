@@ -1,5 +1,4 @@
 ﻿using MassTransit;
-using Ordering.Orders.DTOs;
 using Ordering.Orders.Features.CreateOrder;
 using Shared.Messaging.Events;
 

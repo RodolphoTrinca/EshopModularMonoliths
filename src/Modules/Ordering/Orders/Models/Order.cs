@@ -38,12 +38,11 @@ public class Order : Aggregate<Guid>
         if (existingItem != null)
         {
             existingItem.Quantity += quantity;
+            return;
         }
-        else
-        {
-            var orderItem = new OrderItem(Id, productId, quantity, price);
-            _items.Add(orderItem);
-        }
+
+        var orderItem = new OrderItem(Id, productId, quantity, price);
+        _items.Add(orderItem);
     }
 
     public void Remove(Guid productId)
