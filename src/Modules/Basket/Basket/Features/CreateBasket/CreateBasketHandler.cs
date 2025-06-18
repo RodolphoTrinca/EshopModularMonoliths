@@ -5,7 +5,7 @@ namespace Basket.Basket.Features.CreateBasket;
 
 public record CreateBasketCommand(ShoppingCartDTO ShoppingCart) : ICommand<CreateBasketResult>;
 
-public record CreateBasketResult(Guid BasketId);
+public record CreateBasketResult(Guid Id);
 
 public class CreateBasketCommandValidator : AbstractValidator<CreateBasketCommand>
 {
